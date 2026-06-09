@@ -1,0 +1,28 @@
+# Claude Code local settings
+.claude/settings.local.json
+
+# Maven build output
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local environment config (contains secrets)
+backend/src/main/resources/application-local.properties
+backend/src/main/resources/application-local.yml
+
+# Logs
+*.log
+logs/
