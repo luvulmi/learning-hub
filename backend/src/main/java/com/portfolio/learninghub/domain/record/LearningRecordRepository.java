@@ -21,4 +21,6 @@ public interface LearningRecordRepository extends JpaRepository<LearningRecord, 
     Page<LearningRecord> findPublicByUser(User user, Pageable pageable);
 
     Optional<LearningRecord> findByIdAndUser(Long id, User user);
+
+    long countByUserAndIsPublicTrue(User user);
 }
