@@ -58,4 +58,9 @@ public class LearningRecord extends BaseTimeEntity {
         this.category = category;
         this.isPublic = isPublic;
     }
+
+    public void replaceTags(List<RecordTag> newTags) {
+        this.recordTags.clear();
+        this.recordTags.addAll(newTags);
+    }
 }
