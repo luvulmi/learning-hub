@@ -38,8 +38,9 @@ public class SecurityConfig {
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/profiles/**").permitAll()   // 공개 프로필 — 인증 불필요
+                .requestMatchers("/api/profiles/**").permitAll()
                 .requestMatchers("/oauth2/**", "/login/**").permitAll()
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()
             )
             .oauth2Login(oauth2 -> oauth2
