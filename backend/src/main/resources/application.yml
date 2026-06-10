@@ -1,0 +1,37 @@
+spring:
+  profiles:
+    active: local
+
+  application:
+    name: learning-hub-backend
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/learning_hub}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope: email, profile
+
+jwt:
+  secret: ${JWT_SECRET:local-dev-secret-must-be-at-least-32-characters-long}
+  expiration-ms: 86400000
+
+app:
+  frontend-url: ${FRONTEND_URL:http://localhost:3000}
