@@ -4,7 +4,6 @@ import { recordsApi } from '@/api/records'
 import { useAuthStore } from '@/store/authStore'
 import type { LearningRecord } from '@/types'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
 export default function RecordListPage() {
@@ -24,62 +23,67 @@ export default function RecordListPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b">
-        <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
-          <h1 className="text-lg font-semibold">Learning Hub</h1>
-          <div className="flex gap-2">
-            <Button size="sm" onClick={() => navigate('/records/new')}>+ 새 기록</Button>
-            <Button size="sm" variant="outline" onClick={() => navigate('/recommendations')}>
-              AI 추천
-            </Button>
+    <div className="min-h-screen bg-slate-50">
+      <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/80 backdrop-blur">
+        <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-3">
+          <span className="text-sm font-bold tracking-tight text-slate-900">📚 Learning Hub</span>
+          <nav className="flex items-center gap-0.5">
+            <Button variant="ghost" size="sm" onClick={() => navigate('/recommendations')}>AI 추천</Button>
             {profileSlug && (
-              <Button size="sm" variant="outline" onClick={() => navigate(`/profile/${profileSlug}`)}>
-                내 프로필
-              </Button>
+              <Button variant="ghost" size="sm" onClick={() => navigate(`/profile/${profileSlug}`)}>내 프로필</Button>
             )}
-            <Button size="sm" variant="ghost" onClick={() => { logout(); navigate('/login') }}>
+            <Button variant="ghost" size="sm" onClick={() => { logout(); navigate('/login') }} className="text-slate-400 mr-2">
               로그아웃
             </Button>
-          </div>
+            <Button size="sm" onClick={() => navigate('/records/new')}>
+              + 새 기록
+            </Button>
+          </nav>
         </div>
       </header>
 
-      <main className="mx-auto max-w-4xl px-4 py-8">
+      <main className="mx-auto max-w-4xl px-6 py-8">
         {records.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-muted-foreground mb-4">아직 기록이 없습니다.</p>
+          <div className="flex flex-col items-center py-24 text-center">
+            <div className="mb-4 text-5xl">✍️</div>
+            <p className="mb-6 text-slate-500">아직 학습 기록이 없습니다</p>
             <Button onClick={() => navigate('/records/new')}>첫 학습 기록 작성하기</Button>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {records.map((record) => (
-              <Card key={record.id}>
-                <CardHeader className="pb-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <Link to={`/records/${record.id}`} className="hover:underline">
-                      <CardTitle className="text-base">{record.title}</CardTitle>
-                    </Link>
-                    <div className="flex gap-1 shrink-0">
-                      <Button size="sm" variant="ghost" onClick={() => navigate(`/records/${record.id}/edit`)}>수정</Button>
-                      <Button size="sm" variant="ghost" className="text-destructive" onClick={() => handleDelete(record.id)}>삭제</Button>
-                    </div>
+              <div key={record.id} className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
+                <div className="flex items-start justify-between gap-3">
+                  <Link to={`/records/${record.id}`} className="flex-1 min-w-0">
+                    <h2 className="truncate font-semibold text-slate-900 group-hover:text-blue-600 transition">
+                      {record.title}
+                    </h2>
+                  </Link>
+                  <div className="flex shrink-0 gap-1 opacity-0 group-hover:opacity-100 transition">
+                    <Button variant="ghost" size="sm" onClick={() => navigate(`/records/${record.id}/edit`)}>
+                      수정
+                    </Button>
+                    <Button variant="destructive" size="sm" onClick={() => handleDelete(record.id)}>
+                      삭제
+                    </Button>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-1 mb-2">
-                    <Badge variant="secondary">{record.category}</Badge>
-                    {record.tags.map((tag) => (
-                      <Badge key={tag} variant="outline">{tag}</Badge>
-                    ))}
-                  </div>
-                  <p className="text-sm text-muted-foreground line-clamp-2">{record.content}</p>
-                  <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
-                    <span>{new Date(record.createdAt).toLocaleDateString('ko-KR')}</span>
-                    {record.isPublic && <Badge variant="outline" className="text-xs">공개</Badge>}
-                  </div>
-                </CardContent>
-              </Card>
+                </div>
+
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  <Badge variant="secondary" className="text-xs">{record.category}</Badge>
+                  {record.tags.map((tag) => (
+                    <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
+                  ))}
+                  {record.isPublic && (
+                    <Badge variant="outline" className="text-xs text-blue-500 border-blue-200">공개</Badge>
+                  )}
+                </div>
+
+                <p className="mt-2.5 line-clamp-2 text-sm text-slate-500">{record.content}</p>
+                <p className="mt-3 text-xs text-slate-400">
+                  {new Date(record.createdAt).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </p>
+              </div>
             ))}
           </div>
         )}

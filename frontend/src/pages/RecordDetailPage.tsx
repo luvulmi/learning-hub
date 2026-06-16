@@ -25,32 +25,36 @@ export default function RecordDetailPage() {
   if (!record) return null
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b">
-        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-4">
-          <button onClick={() => navigate('/records')} className="text-muted-foreground hover:text-foreground">
-            ← 목록으로
-          </button>
-          <div className="flex gap-2">
-            <Button size="sm" variant="outline" onClick={() => navigate(`/records/${id}/edit`)}>수정</Button>
-            <Button size="sm" variant="outline" className="text-destructive" onClick={handleDelete}>삭제</Button>
+    <div className="min-h-screen bg-slate-50">
+      <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/80 backdrop-blur">
+        <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-3">
+          <Button variant="ghost" size="sm" onClick={() => navigate('/records')}>← 목록</Button>
+          <div className="flex gap-1">
+            <Button variant="outline" size="sm" onClick={() => navigate(`/records/${id}/edit`)}>수정</Button>
+            <Button variant="destructive" size="sm" onClick={handleDelete}>삭제</Button>
           </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-3xl px-4 py-8">
-        <div className="mb-4 flex flex-wrap items-center gap-2">
+      <main className="mx-auto max-w-4xl px-6 py-10">
+        <div className="flex flex-wrap gap-1.5 mb-4">
           <Badge variant="secondary">{record.category}</Badge>
           {record.tags.map((tag) => (
             <Badge key={tag} variant="outline">{tag}</Badge>
           ))}
-          {record.isPublic && <Badge variant="outline">공개</Badge>}
+          {record.isPublic && (
+            <Badge variant="outline" className="text-blue-500 border-blue-200">공개</Badge>
+          )}
         </div>
-        <h1 className="mb-2 text-2xl font-bold">{record.title}</h1>
-        <p className="mb-8 text-xs text-muted-foreground">
+
+        <h1 className="text-2xl font-bold text-slate-900">{record.title}</h1>
+        <p className="mt-1.5 text-sm text-slate-400">
           {new Date(record.createdAt).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
         </p>
-        <div className="whitespace-pre-wrap text-sm leading-relaxed">{record.content}</div>
+
+        <div className="mt-8 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">{record.content}</div>
+        </div>
       </main>
     </div>
   )

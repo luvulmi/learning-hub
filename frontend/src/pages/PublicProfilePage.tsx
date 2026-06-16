@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import type { LearningRecord, PublicProfile } from '@/types'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
 export default function PublicProfilePage() {
@@ -23,36 +22,37 @@ export default function PublicProfilePage() {
   if (!profile) return null
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="mx-auto max-w-3xl px-4 py-12">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold">{profile.nickname}</h1>
-          <p className="mt-1 text-muted-foreground">@{profile.profileSlug}</p>
-          <p className="mt-2 text-sm text-muted-foreground">학습 기록 {profile.totalPublicRecords}개</p>
+    <div className="min-h-screen bg-slate-50">
+      <div className="mx-auto max-w-4xl px-6 py-14">
+        <div className="mb-10 text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-900 text-2xl font-bold text-white">
+            {profile.nickname.charAt(0).toUpperCase()}
+          </div>
+          <h1 className="text-2xl font-bold text-slate-900">{profile.nickname}</h1>
+          <p className="mt-1 text-sm text-slate-400">@{profile.profileSlug}</p>
+          <p className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 shadow-sm">
+            📚 공개 기록 {profile.totalPublicRecords}개
+          </p>
         </div>
 
         {records.length === 0 ? (
-          <p className="text-center text-muted-foreground">공개된 학습 기록이 없습니다.</p>
+          <div className="py-16 text-center text-slate-400">공개된 학습 기록이 없습니다.</div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {records.map((record) => (
-              <Card key={record.id}>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base">{record.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="mb-2 flex flex-wrap gap-1">
-                    <Badge variant="secondary">{record.category}</Badge>
-                    {record.tags.map((tag) => (
-                      <Badge key={tag} variant="outline">{tag}</Badge>
-                    ))}
-                  </div>
-                  <p className="text-sm text-muted-foreground line-clamp-3">{record.content}</p>
-                  <p className="mt-2 text-xs text-muted-foreground">
-                    {new Date(record.createdAt).toLocaleDateString('ko-KR')}
-                  </p>
-                </CardContent>
-              </Card>
+              <div key={record.id} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <h2 className="font-semibold text-slate-900">{record.title}</h2>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  <Badge variant="secondary" className="text-xs">{record.category}</Badge>
+                  {record.tags.map((tag) => (
+                    <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
+                  ))}
+                </div>
+                <p className="mt-2.5 line-clamp-3 text-sm text-slate-500">{record.content}</p>
+                <p className="mt-3 text-xs text-slate-400">
+                  {new Date(record.createdAt).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </p>
+              </div>
             ))}
           </div>
         )}
