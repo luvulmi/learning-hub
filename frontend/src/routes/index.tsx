@@ -6,6 +6,7 @@ import RecordListPage from '@/pages/RecordListPage'
 import RecordFormPage from '@/pages/RecordFormPage'
 import RecordDetailPage from '@/pages/RecordDetailPage'
 import PublicProfilePage from '@/pages/PublicProfilePage'
+import RecommendationPage from '@/pages/RecommendationPage'
 
 export default function AppRoutes() {
   return (
@@ -20,6 +21,7 @@ export default function AppRoutes() {
       <Route path="/records/new" element={<PrivateRoute><RecordFormPage /></PrivateRoute>} />
       <Route path="/records/:id" element={<PrivateRoute><RecordDetailPage /></PrivateRoute>} />
       <Route path="/records/:id/edit" element={<PrivateRoute><RecordFormPage /></PrivateRoute>} />
+      <Route path="/recommendations" element={<PrivateRoute><RecommendationPage /></PrivateRoute>} />
 
       <Route path="/" element={<Navigate to="/records" replace />} />
     </Routes>

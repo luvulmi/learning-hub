@@ -30,6 +30,9 @@ export default function RecordListPage() {
           <h1 className="text-lg font-semibold">Learning Hub</h1>
           <div className="flex gap-2">
             <Button size="sm" onClick={() => navigate('/records/new')}>+ 새 기록</Button>
+            <Button size="sm" variant="outline" onClick={() => navigate('/recommendations')}>
+              AI 추천
+            </Button>
             {profileSlug && (
               <Button size="sm" variant="outline" onClick={() => navigate(`/profile/${profileSlug}`)}>
                 내 프로필
