@@ -23,7 +23,7 @@ export default function LoginPage() {
 
         <div className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur">
           <button
-            onClick={() => window.location.href = '/oauth2/authorization/google'}
+            onClick={() => window.location.href = `${import.meta.env.VITE_BACKEND_URL ?? ''}/oauth2/authorization/google`}
             className="flex w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white px-4 py-3 text-sm font-medium text-slate-800 shadow-lg transition hover:bg-slate-50 active:scale-95"
           >
             <svg className="h-5 w-5" viewBox="0 0 24 24">

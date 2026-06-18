@@ -23,6 +23,9 @@ Thumbs.db
 backend/src/main/resources/application-local.properties
 backend/src/main/resources/application-local.yml
 
+# Root .env (docker-compose secrets)
+.env
+
 # Logs
 *.log
 logs/
