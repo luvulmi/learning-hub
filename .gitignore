@@ -29,3 +29,5 @@ backend/src/main/resources/application-local.yml
 # Logs
 *.log
 logs/
+
+.claude/
