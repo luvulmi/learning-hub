@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { recordsApi } from '@/api/records'
 import type { LearningRecord } from '@/types'
 import { Button } from '@/components/ui/button'
@@ -53,7 +55,9 @@ export default function RecordDetailPage() {
         </p>
 
         <div className="mt-8 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">{record.content}</div>
+          <div className="prose prose-sm prose-slate max-w-none">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{record.content}</ReactMarkdown>
+          </div>
         </div>
       </main>
     </div>
